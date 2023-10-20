@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Praktikum5_PAM</string>
+
+    <string name="laki">laki</string>
+    <string name="wanita">wanita</string>
+
 </resources>
