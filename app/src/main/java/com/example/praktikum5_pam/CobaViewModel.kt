@@ -8,6 +8,7 @@ import com.example.praktikum5_pam.Data.DataForm
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
 class CobaViewModel : ViewModel(){
     var  namaUsr : String by mutableStateOf("")
@@ -21,6 +22,13 @@ class CobaViewModel : ViewModel(){
     val uiState : StateFlow<DataForm> = _uiState.asStateFlow()
 
     fun insertData(nm: String, tlp: String, jk: String){
-
+        namaUsr = nm;
+        noTlp = tlp;
+        jenilKl = jk;
     }
+
+    fun setJenisK(pilihjk: String){
+        _uiState.update { currentState -> currentState.copy(sex = pilihjk) }
+    }
+
 }
