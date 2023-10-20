@@ -4,6 +4,7 @@ import android.content.pm.ChangedPackages
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -49,7 +51,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-
+                    TampilLayout()
                 }
             }
         }
@@ -84,6 +86,24 @@ fun SelectJK(
                 )
                 Text(item)
             }
+        }
+    }
+}
+
+
+@Composable
+fun TampilLayout( modifier: Modifier = Modifier
+){
+    Card(
+        modifier = modifier,
+        elevation = CardDefaults.cardElevation(defaultElevation = 5.dp)
+    ){
+        Column (
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(20.dp)
+        ){
+          TampilForm()
         }
     }
 }
