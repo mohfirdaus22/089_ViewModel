@@ -7,8 +7,10 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.KeyboardOptions
@@ -118,11 +120,13 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
     var textNama by remember { mutableStateOf("") }
     var textTlp by remember { mutableStateOf("") }
 
+
     val context = LocalContext.current
     val dataForm: DataForm
     val uiState by cobaViewModel.uiState.collectAsState()
     dataForm = uiState;
 
+    var textAlmt by remember { mutableStateOf("") }
 
     OutlinedTextField(
         value = textNama,
@@ -143,23 +147,40 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
             textTlp= it
         }
     )
+    OutlinedTextField(
+        value = textAlmt,
+        shape = MaterialTheme.shapes.large ,
+        modifier = Modifier.fillMaxWidth(),
+        label = { Text(text = "Alamat")},
+        onValueChange ={
+            textAlmt = it
+        }
+    )
+
     SelectJK(
         options = jenis.map{id ->context.resources.getString(id)},
         onSelectionChanged = {cobaViewModel.setJenisK(it)})
-    Button(onClick = { cobaViewModel.insertData(textNama, textTlp, dataForm.sex) }
+    Button(
+        onClick = { cobaViewModel.insertData(textNama, textTlp, textAlmt, dataForm.sex) }
     ) {
         Text(
             text = stringResource(R.string.submit),
             fontSize = 16.sp
         )
     }
-
+    Spacer(modifier = Modifier.height(100.dp))
+    TextHasil(
+        namanya = cobaViewModel.namaUsr,
+        telponnya = cobaViewModel.noTlp,
+        alamatnya = cobaViewModel.alamat,
+        jenisnnya = cobaViewModel.jenilKl,
+    )
 
 }
 
 
 @Composable
-fun TextHasil(namanya : String, telponnya: String, jenisnnya: String){
+fun TextHasil(namanya : String, telponnya: String, alamatnya: String, jenisnnya: String){
     ElevatedCard (
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -178,10 +199,16 @@ fun TextHasil(namanya : String, telponnya: String, jenisnnya: String){
                 .padding(horizontal = 10.dp, vertical = 5.dp)
         )
         Text(
-            text = "Jenis Kelamin : " + jenisnnya,
+            text = "Alamat : " + jenisnnya,
             modifier = Modifier
                 .padding(horizontal = 10.dp, vertical = 5.dp)
         )
+        Text(
+            text = "Jenis Kelamin : " + alamatnya,
+            modifier = Modifier
+                .padding(horizontal = 10.dp, vertical = 5.dp)
+        )
+
 
     }
 }
@@ -197,6 +224,6 @@ fun TextHasil(namanya : String, telponnya: String, jenisnnya: String){
 @Composable
 fun GreetingPreview() {
     Praktikum5_PAMTheme {
-
+        TampilLayout()
     }
 }

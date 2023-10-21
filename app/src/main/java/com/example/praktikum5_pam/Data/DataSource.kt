@@ -4,8 +4,8 @@ import com.example.praktikum5_pam.R
 
 object DataSource {
     val jenis = listOf(
-        R.string.laki,
-        R.string.wanita
+        R.string.Laki,
+        R.string.Wanita
     )
 
 }
