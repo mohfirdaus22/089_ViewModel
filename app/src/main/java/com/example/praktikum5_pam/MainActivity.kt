@@ -4,6 +4,7 @@ import android.content.pm.ChangedPackages
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
@@ -33,10 +35,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -70,7 +76,7 @@ fun SelectJK(
 ){
     var selectedValue by rememberSaveable { mutableStateOf("") }
 
-    Column( modifier = Modifier.padding(16.dp)) {
+    Row( modifier = Modifier.padding(16.dp)) {
         options.forEach{ item ->
             Row (
                 modifier = Modifier.selectable(
@@ -103,7 +109,7 @@ fun SelectST(
 ){
     var selectedValue by rememberSaveable { mutableStateOf("") }
 
-    Column( modifier = Modifier.padding(16.dp)) {
+    Row( modifier = Modifier.padding(16.dp)) {
         options.forEach{ item ->
             Row (
                 modifier = Modifier.selectable(
@@ -163,7 +169,20 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
     val uiState by cobaViewModel.uiState.collectAsState()
     dataForm = uiState;
 
+    Row (verticalAlignment = Alignment.CenterVertically){
+        Image(painter = painterResource(id = R.drawable.baseline_arrow_back_24),
+            contentDescription = null, modifier = Modifier.size(10.dp))
 
+        Spacer(modifier = Modifier.padding(3.dp))
+
+        Text(text =  "Register",
+            fontSize = 10.sp,
+            fontWeight = FontWeight.Bold)
+
+    }
+    Text(text = "Create Your Account",
+        fontSize = 25.sp, color = Color.Gray, textAlign = TextAlign.Center
+    )
 
     OutlinedTextField(
         value = textNama,
@@ -190,13 +209,18 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
         modifier = Modifier.fillMaxWidth(),
         label = { Text(text = "Email")},
         onValueChange ={
-            textAlmt = it
+            textEml = it
         }
     )
+    Text(text = "Jenis Kelamin :",modifier = Modifier
+        .padding(horizontal = 5.dp, vertical = 5.dp))
 
     SelectJK(
         options = jenis.map{id ->context.resources.getString(id)},
         onSelectionChanged = {cobaViewModel.setJenisK(it)})
+
+    Text(text = "Status:",modifier = Modifier
+        .padding(horizontal = 5.dp, vertical = 5.dp))
 
     SelectST(
         options = status.map{id ->context.resources.getString(id)},
@@ -220,7 +244,7 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
             fontSize = 16.sp
         )
     }
-    Spacer(modifier = Modifier.height(50.dp))
+    Spacer(modifier = Modifier.height(20.dp))
     TextHasil(
         jenisnnya = cobaViewModel.jenilKl,
         statusnya = cobaViewModel.status,
