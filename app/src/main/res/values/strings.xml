@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">Praktikum5_PAM</string>
-    <string name="submit">Submit</string>
+    <string name="submit">Register</string>
     <string name="Laki">Laki-Laki</string>
     <string name="Wanita">Wanita</string>
+    <string name="Lainnya">Lainnya</string>
+
 
 </resources>

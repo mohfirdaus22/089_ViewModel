@@ -103,9 +103,9 @@ fun TampilLayout( modifier: Modifier = Modifier
         elevation = CardDefaults.cardElevation(defaultElevation = 5.dp)
     ){
         Column (
-            verticalArrangement = Arrangement.spacedBy(10.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(20.dp)
+            verticalArrangement = Arrangement.spacedBy(10.dp),// Mengatur jarak antara elemen-elemen dalam kolom secara vertikal
+            horizontalAlignment = Alignment.CenterHorizontally,  // Menengahkan elemen-elemen dalam kolom secara horizontal
+            modifier = Modifier.padding(20.dp)// Menambahkan margin sebesar 20dp ke dalam kolom
         ){
           TampilForm()
         }
@@ -121,7 +121,7 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
     var textTlp by remember { mutableStateOf("") }
 
 
-    val context = LocalContext.current
+    val context = LocalContext.current // untuk mendapatkan akses ke Context yang digunakan dalam konteks lokal komponen.
     val dataForm: DataForm
     val uiState by cobaViewModel.uiState.collectAsState()
     dataForm = uiState;
@@ -132,7 +132,7 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
         value = textNama,
         shape = MaterialTheme.shapes.large ,
         modifier = Modifier.fillMaxWidth(),
-        label = { Text(text = "Nama Lengkap")},
+        label = { Text(text = "Username")},
         onValueChange ={
             textNama = it
         }
@@ -142,11 +142,25 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         shape = MaterialTheme.shapes.large ,
         modifier = Modifier.fillMaxWidth(),
-        label = { Text(text = "Telpon")},
+        label = { Text(text = "Telepon")},
         onValueChange ={
             textTlp= it
         }
     )
+    OutlinedTextField(
+        value = textAlmt,
+        shape = MaterialTheme.shapes.large ,
+        modifier = Modifier.fillMaxWidth(),
+        label = { Text(text = "Email")},
+        onValueChange ={
+            textAlmt = it
+        }
+    )
+
+    SelectJK(
+        options = jenis.map{id ->context.resources.getString(id)},
+        onSelectionChanged = {cobaViewModel.setJenisK(it)})
+
     OutlinedTextField(
         value = textAlmt,
         shape = MaterialTheme.shapes.large ,
@@ -157,9 +171,6 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
         }
     )
 
-    SelectJK(
-        options = jenis.map{id ->context.resources.getString(id)},
-        onSelectionChanged = {cobaViewModel.setJenisK(it)})
     Button(
         onClick = { cobaViewModel.insertData(textNama, textTlp, textAlmt, dataForm.sex) }
     ) {
