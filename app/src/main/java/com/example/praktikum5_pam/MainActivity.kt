@@ -80,6 +80,7 @@ fun SelectJK(
                     }
                 ),
                 verticalAlignment = Alignment.CenterVertically
+
             ){
                 RadioButton(
                     selected = selectedValue == item,
@@ -191,7 +192,7 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
 
 
 @Composable
-fun TextHasil(namanya : String, telponnya: String, alamatnya: String, jenisnnya: String){
+fun TextHasil(namanya : String, statusnya: String, alamatnya: String, jenisnnya: String, emailnya: String){
     ElevatedCard (
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -200,22 +201,22 @@ fun TextHasil(namanya : String, telponnya: String, alamatnya: String, jenisnnya:
             .fillMaxWidth()
     ) {
         Text(
-            text = "Nama :" + namanya,
+            text = "Jenis Kelamin :" + jenisnnya,
             modifier = Modifier
                 .padding(horizontal = 10.dp, vertical = 4.dp)
         )
         Text(
-            text = "Telephone : " + telponnya,
+            text = "Status : " + statusnya,
             modifier = Modifier
                 .padding(horizontal = 10.dp, vertical = 5.dp)
         )
         Text(
-            text = "Alamat : " + jenisnnya,
+            text = "Alamat : " + alamatnya,
             modifier = Modifier
                 .padding(horizontal = 10.dp, vertical = 5.dp)
         )
         Text(
-            text = "Jenis Kelamin : " + alamatnya,
+            text = "Email : " + emailnya,
             modifier = Modifier
                 .padding(horizontal = 10.dp, vertical = 5.dp)
         )
