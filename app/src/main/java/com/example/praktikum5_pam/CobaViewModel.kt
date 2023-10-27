@@ -11,23 +11,28 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 class CobaViewModel : ViewModel(){
-    var  namaUsr : String by mutableStateOf("")
-        private set
-    var noTlp : String by mutableStateOf("")
-        private set
+
     var jenilKl : String by mutableStateOf("")
+        private set
+    var  status : String by mutableStateOf("")
         private set
     var alamat : String by mutableStateOf("")
         private set
+    var email : String by mutableStateOf("")
+        private set
+
+
 
     private val _uiState = MutableStateFlow(DataForm())
     val uiState : StateFlow<DataForm> = _uiState.asStateFlow()
 
-    fun insertData(nm: String, tlp: String, jk: String, almt: String){
-        namaUsr = nm;
-        noTlp = tlp;
-        alamat = almt;
+    fun insertData(st: String, em: String, jk: String, almt: String){
+
         jenilKl = jk;
+        status = st;
+        alamat = almt;
+        email = em;
+
 
     }
 

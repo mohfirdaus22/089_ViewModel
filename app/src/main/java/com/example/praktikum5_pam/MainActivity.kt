@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.praktikum5_pam.Data.DataForm
 import com.example.praktikum5_pam.Data.DataSource.jenis
+import com.example.praktikum5_pam.Data.DataSource.status
 import com.example.praktikum5_pam.ui.theme.Praktikum5_PAMTheme
 
 class MainActivity : ComponentActivity() {
@@ -64,6 +65,39 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun SelectJK(
+    options: List<String>,
+    onSelectionChanged: (String) ->Unit ={}
+){
+    var selectedValue by rememberSaveable { mutableStateOf("") }
+
+    Column( modifier = Modifier.padding(16.dp)) {
+        options.forEach{ item ->
+            Row (
+                modifier = Modifier.selectable(
+                    selected = selectedValue == item,
+                    onClick = {
+                        selectedValue = item
+                        onSelectionChanged(item)
+                    }
+                ),
+                verticalAlignment = Alignment.CenterVertically
+
+            ){
+                RadioButton(
+                    selected = selectedValue == item,
+                    onClick = {
+                        selectedValue = item
+                        onSelectionChanged(item)
+                    }
+                )
+                Text(item)
+            }
+        }
+    }
+}
+
+@Composable
+fun SelectST(
     options: List<String>,
     onSelectionChanged: (String) ->Unit ={}
 ){
@@ -120,6 +154,8 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
 
     var textNama by remember { mutableStateOf("") }
     var textTlp by remember { mutableStateOf("") }
+    var textEml by remember { mutableStateOf("") }
+    var textAlmt by remember { mutableStateOf("") }
 
 
     val context = LocalContext.current // untuk mendapatkan akses ke Context yang digunakan dalam konteks lokal komponen.
@@ -127,7 +163,7 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
     val uiState by cobaViewModel.uiState.collectAsState()
     dataForm = uiState;
 
-    var textAlmt by remember { mutableStateOf("") }
+
 
     OutlinedTextField(
         value = textNama,
@@ -149,7 +185,7 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
         }
     )
     OutlinedTextField(
-        value = textAlmt,
+        value = textEml,
         shape = MaterialTheme.shapes.large ,
         modifier = Modifier.fillMaxWidth(),
         label = { Text(text = "Email")},
@@ -160,6 +196,10 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
 
     SelectJK(
         options = jenis.map{id ->context.resources.getString(id)},
+        onSelectionChanged = {cobaViewModel.setJenisK(it)})
+
+    SelectST(
+        options = status.map{id ->context.resources.getString(id)},
         onSelectionChanged = {cobaViewModel.setJenisK(it)})
 
     OutlinedTextField(
@@ -173,26 +213,26 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
     )
 
     Button(
-        onClick = { cobaViewModel.insertData(textNama, textTlp, textAlmt, dataForm.sex) }
+        onClick = { cobaViewModel.insertData(textTlp,textEml, dataForm.sex ,textAlmt, ) }
     ) {
         Text(
             text = stringResource(R.string.submit),
             fontSize = 16.sp
         )
     }
-    Spacer(modifier = Modifier.height(100.dp))
+    Spacer(modifier = Modifier.height(50.dp))
     TextHasil(
-        namanya = cobaViewModel.namaUsr,
-        telponnya = cobaViewModel.noTlp,
-        alamatnya = cobaViewModel.alamat,
         jenisnnya = cobaViewModel.jenilKl,
+        statusnya = cobaViewModel.status,
+        alamatnya = cobaViewModel.alamat,
+        emailnya = cobaViewModel.email,
     )
 
 }
 
 
 @Composable
-fun TextHasil(namanya : String, statusnya: String, alamatnya: String, jenisnnya: String, emailnya: String){
+fun TextHasil( statusnya: String, alamatnya: String, jenisnnya: String, emailnya: String){
     ElevatedCard (
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp

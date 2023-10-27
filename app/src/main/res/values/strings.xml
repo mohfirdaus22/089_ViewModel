@@ -3,7 +3,9 @@
     <string name="submit">Register</string>
     <string name="Laki">Laki-Laki</string>
     <string name="Wanita">Wanita</string>
-    <string name="Lainnya">Lainnya</string>
+    <string name="Menikah">Menikah</string>
+    <string name="Belum_Menikah">Belum Menikah</string>
+
 
 
 </resources>
